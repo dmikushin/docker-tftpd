@@ -17,25 +17,5 @@ services:
     ports:
       - 69:1069/udp
     volumes:
-      - tftpd_boot:/tftpboot/boot
-      - tftpd_configuration:/tftpboot/pxelinux.cfg:ro
-  # http-bootfiles:
-  #   image: nginx:stable
-  #   restart: unless-stopped
-  #   cap_drop:
-  #     - ALL
-  #   cap_add:
-  #     - CHOWN
-  #     - DAC_OVERRIDE
-  #     - SETUID
-  #     - SETGID
-  #   volumes:
-  #     - ./nginx/conf.d:/etc/nginx/conf.d:ro
-  #     - tftpd_boot:/var/www/default/boot
-  #   ports:
-  #     - 8080:8080
-
-volumes:
-  tftpd_boot: {}
-  tftpd_configuration: {}
+      - ./tftpboot:/tftpboot
 
