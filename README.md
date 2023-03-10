@@ -26,7 +26,7 @@ To remedy the situation, these images have been written with security, simplicit
 ## Building
 
 ```
-docker build -t tftp .
+docker build -t tftpd .
 ```
 
 ## Deployment
