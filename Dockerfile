@@ -1,7 +1,7 @@
 # Copyright (c) 2018 kalaksi@users.noreply.github.com.
 # This work is licensed under the terms of the MIT license. For a copy, see <https://opensource.org/licenses/MIT>.
 
-FROM alpine:3.16.2
+FROM alpine:latest
 
 ENV TFTPD_BIND_ADDRESS="0.0.0.0:1069"
 ENV TFTPD_EXTRA_ARGS=""
@@ -44,3 +44,4 @@ CMD set -eu ;\
     # See README for an example file structure for RPi.
     [ -d /tftpboot/boot/root ] && cp -af /tftpboot/boot/root/* /tftpboot ;\
     exec in.tftpd -L -vvv -u ftp --secure --address "$TFTPD_BIND_ADDRESS" $TFTPD_EXTRA_ARGS /tftpboot
+

@@ -1,9 +1,7 @@
 version: '2'
 services:
   tftpd:
-    image: docker.io/kalaksi/tftpd
-    # You can also use GitLab as an alternative to Docker Hub:
-    # image: registry.gitlab.com/kalaksi-containers/tftpd
+    image: tftpd
     restart: unless-stopped
     environment:
       # An interface and a port to listen to. "0.0.0.0" means all interfaces

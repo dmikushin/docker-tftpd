@@ -1,18 +1,13 @@
+# TFTP server in a Docker container
 
-## Repositories
-- [GitLab repository](https://gitlab.com/kalaksi-containers/tftpd/) (image: `registry.gitlab.com/kalaksi-containers/tftpd`)
-- [Docker Hub repository](https://hub.docker.com/r/kalaksi/tftpd/) (image: `docker.io/kalaksi/tftpd`)
-- [GitHub repository](https://github.com/kalaksi/docker-tftpd)
+This container runs a TFTP server with a prepopulated `/tftpboot` directory with necessary files and configuration for PXE booting.
 
-## What is this container for?
-This container runs a TFTP server with a prepopulated ```/tftpboot``` directory with necessary files and configuration for PXE booting.  
 Also compatible with U-Boot and Raspberry Pi 4.
 
-## Why use this container?
-**Simply put, this container has been written with simplicity and security in mind.**
+## Better than the others
 
 Many community containers run unnecessarily with root privileges by default and don't provide help for dropping unneeded CAPabilities either.
-Additionally, overly complex shell scripts and unofficial base images make it harder to verify the source and keep images up-to-date.  
+Additionally, overly complex shell scripts and unofficial base images make it harder to verify the source and keep images up-to-date.
 
 To remedy the situation, these images have been written with security, simplicity and overall quality in mind.
 
@@ -21,25 +16,32 @@ To remedy the situation, these images have been written with security, simplicit
 |Don't run as root          |❌    | Couldn't get tftpd to work without root (should figure out why). It drops the privileges, though.|
 |Transparent build process  |✅    | For verifying that the container matches the code. See GitLab CI. |
 |Official base image        |✅    | |
-|Drop extra CAPabilities    |✅    | See ```docker-compose.yml``` |
+|Drop extra CAPabilities    |✅    | See `docker-compose.yml` |
 |No default passwords       |✅    | No static default passwords. That would make the container insecure by default. |
 |Support secrets-files      |✅    | Support providing e.g. passwords via files instead of environment variables. |
 |Handle signals properly    |✅    | |
 |Simple Dockerfile          |✅    | No overextending the container's responsibilities. And keep everything in the Dockerfile if reasonable. |
 |Versioned tags             |✅    | Offer versioned tags for stability.|
 
-## Running this container
-See the example ```docker-compose.yml``` in the source repository.
+## Building
 
-### Supported tags
-See the ```Tags``` tab on Docker Hub for specifics. Basically you have:
-- The default ```latest``` tag that always has the latest changes.
-- Minor versioned tags (follow Semantic Versioning), e.g. ```1.1``` which would follow branch ```1.1.x``` on GitHub.
+```
+docker build -t tftp .
+```
 
-### Configuration
+## Deployment
 
-The user should populate ```/tftpboot/boot``` with bootable images and usually replace the ```/tftpboot/pxelinux.cfg``` directory with one having the appropriate configuration.  
-See ```docker-compose.yml``` in the source repository for an example.  
+```
+docker-compose up -d
+```
+
+See the example `docker-compose.yml` in the source repository.
+
+## Configuration
+
+The user should populate `/tftpboot/boot` with bootable images and usually replace the `/tftpboot/pxelinux.cfg` directory with one having the appropriate configuration.
+
+See `docker-compose.yml` in the source repository for an example.
 
 Here's an overview of the directory structure with an example boot image for LibreELEC and another for RaspBian (Raspberry Pi).
 ```
@@ -64,8 +66,9 @@ Here's an overview of the directory structure with an example boot image for Lib
      └── ...
  
 ```
-  
-And this could be the contents for custom ```pxelinux.cfg/default```:
+
+And this could be the contents for custom `pxelinux.cfg/default`:
+
 ```
 DEFAULT menu.c32
 PROMPT 0
@@ -83,23 +86,11 @@ LABEL local
     LOCALBOOT 0
 ```
 
-#### Using HTTP for file downloads instead of TFTP
-In some scenarios, TFTP can be very slow or barely working. In that case, HTTP can be a better alternative for downloading the boot files.  
-To utilize HTTP instead, `kernel` and `append` have to include the HTTP server address. For example:
-```
-    kernel http://HTTP_SERVER_IP/boot/ubuntu/vmlinuz
-    append initrd=http://HTTP_SERVER_IP/boot/ubuntu/initrd.img <REST_OF_THE_BOOT_PARAMETERS>
-```
-
-`docker-compose.yml` includes a service (commented out) for using nginx to serve boot files over HTTP.
-
-### Contributing
-See the repository on <https://github.com/kalaksi/docker-tftpd>.
-All kinds of contributions are welcome!
-
 ## License
-Copyright (c) 2018 kalaksi@users.noreply.github.com. See [LICENSE](https://github.com/kalaksi/docker-airsonic/blob/master/LICENSE) for license information.  
 
-As with all Docker images, the built image likely also contains other software which may be under other licenses (such as software from the base distribution, along with any direct or indirect dependencies of the primary software being contained).  
-  
+Copyright (c) 2018 kalaksi@users.noreply.github.com. See [LICENSE](https://github.com/kalaksi/docker-airsonic/blob/master/LICENSE) for license information.
+
+As with all Docker images, the built image likely also contains other software which may be under other licenses (such as software from the base distribution, along with any direct or indirect dependencies of the primary software being contained).
+
 As for any pre-built image usage, it is the image user's responsibility to ensure that any use of this image complies with any relevant licenses for all software contained within.
+
