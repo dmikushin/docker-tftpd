@@ -10,12 +10,6 @@ services:
       TFTPD_BIND_ADDRESS: "0.0.0.0:69"
       # Search the man page for --blocksize to learn more
       TFTPD_EXTRA_ARGS: '--blocksize 1468'
-    cap_add:
-      - SETUID
-      - SETGID
-      - SYS_CHROOT
-    ports:
-      - 69:69/udp
     volumes:
       - ./tftpboot:/tftpboot
 
