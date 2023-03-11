@@ -3,19 +3,19 @@ services:
   tftpd:
     image: tftpd
     restart: unless-stopped
+    # https://github.com/jumanjihouse/docker-tftp-hpa/issues/27#issuecomment-766144342
+    network_mode: host
     environment:
       # An interface and a port to listen to. "0.0.0.0" means all interfaces
-      TFTPD_BIND_ADDRESS: "0.0.0.0:1069"
+      TFTPD_BIND_ADDRESS: "0.0.0.0:69"
       # Search the man page for --blocksize to learn more
       TFTPD_EXTRA_ARGS: '--blocksize 1468'
-    cap_drop:
-      - ALL
     cap_add:
       - SETUID
       - SETGID
       - SYS_CHROOT
     ports:
-      - 69:1069/udp
+      - 69:69/udp
     volumes:
       - ./tftpboot:/tftpboot
 
