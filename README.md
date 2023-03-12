@@ -4,25 +4,6 @@ This container runs a TFTP server with a prepopulated `/tftpboot` directory with
 
 Also compatible with U-Boot and Raspberry Pi 4.
 
-## Better than the others
-
-Many community containers run unnecessarily with root privileges by default and don't provide help for dropping unneeded CAPabilities either.
-Additionally, overly complex shell scripts and unofficial base images make it harder to verify the source and keep images up-to-date.
-
-To remedy the situation, these images have been written with security, simplicity and overall quality in mind.
-
-|Requirement                |Status|Details|
-|---------------------------|:----:|-------|
-|Don't run as root          |❌    | Couldn't get tftpd to work without root (should figure out why). It drops the privileges, though.|
-|Transparent build process  |✅    | For verifying that the container matches the code. See GitLab CI. |
-|Official base image        |✅    | |
-|Drop extra CAPabilities    |✅    | See `docker-compose.yml` |
-|No default passwords       |✅    | No static default passwords. That would make the container insecure by default. |
-|Support secrets-files      |✅    | Support providing e.g. passwords via files instead of environment variables. |
-|Handle signals properly    |✅    | |
-|Simple Dockerfile          |✅    | No overextending the container's responsibilities. And keep everything in the Dockerfile if reasonable. |
-|Versioned tags             |✅    | Offer versioned tags for stability.|
-
 ## Building
 
 ```
@@ -39,9 +20,7 @@ See the example `docker-compose.yml` in the source repository.
 
 ## Configuration
 
-The user should populate `/tftpboot/boot` with bootable images and usually replace the `/tftpboot/pxelinux.cfg` directory with one having the appropriate configuration.
-
-See `docker-compose.yml` in the source repository for an example.
+The user should populate `/tftpboot/boot` with bootable images, and place the `/tftpboot/pxelinux.cfg` directory with one having the appropriate configuration.
 
 Here's an overview of the directory structure with an example boot image for LibreELEC and another for RaspBian (Raspberry Pi).
 ```
